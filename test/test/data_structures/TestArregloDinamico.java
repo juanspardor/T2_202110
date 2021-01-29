@@ -31,6 +31,7 @@ public class TestArregloDinamico {
 	@Test
 	public void testDarElemento() {
 		setUp2();
+		assertEquals(""+10, arreglo.darElemento(10)); 
 		// TODO
 	}
 
