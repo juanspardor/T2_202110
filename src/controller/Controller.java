@@ -92,6 +92,12 @@ public class Controller {
 					lector.close();
 					fin = true;
 					break;	
+					
+				case 7:
+					view.printMessage("--------- \\n Invertir Arreglo \\n---------");
+					modelo.invertir();
+					view.printModelo(modelo);
+					break;
 
 				default: 
 					view.printMessage("--------- \n Opcion Invalida !! \n---------");

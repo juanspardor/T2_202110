@@ -1,6 +1,6 @@
 package model.data_structures;
 
-public interface IArregloDinamico<T> {
+public interface IArregloDinamico<T extends Comparable<T>> {
 
 	/**
 	 * Retornar el numero de elementos maximo en el arreglo
@@ -42,5 +42,10 @@ public interface IArregloDinamico<T> {
 	 * @return dato eliminado
 	 */
 	T eliminar( T dato );
+	
+	/**
+	 * Invierte los elementos del arreglo
+	 */
+	public void invertir();
 
 }
