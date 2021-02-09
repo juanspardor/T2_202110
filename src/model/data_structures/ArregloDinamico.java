@@ -9,7 +9,7 @@ package model.data_structures;
  *
  */
 
-public class ArregloDinamico<T> implements IArregloDinamico <T> {
+public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamico<T> {
 	/**
 	 * Capacidad maxima del arreglo
 	 */
@@ -21,23 +21,19 @@ public class ArregloDinamico<T> implements IArregloDinamico <T> {
 	/**
 	 * Arreglo de elementos de tamaNo maximo
 	 */
-	private T [] elementos;
+	private T[] elementos;
 
 	/**
 	 * Construir un arreglo con la capacidad maxima inicial.
 	 * @param max Capacidad maxima inicial
 	 */
-
+	@SuppressWarnings("unchecked")
 	public ArregloDinamico( int max )
 	{
-		
-		elementos = (T[] ) new Object[max];
+		elementos = (T[]) new Object[max];
 		tamanoMax = max;
 		tamanoAct = 0;
 	}
-
-
-
 
 
 
@@ -54,49 +50,47 @@ public class ArregloDinamico<T> implements IArregloDinamico <T> {
 			} 
 
 		}
-	elementos[tamanoAct++] = dato;
-	tamanoAct++;
+		elementos[tamanoAct++] = dato;
+		tamanoAct++;
 
 	}	
 
 
 
+	/**
+	 * Retorna el elemento recibido por parametro
+	 * @param el elemento a buscar
+	 * @return el elemento buscado, null de lo contrario
+	 */
+	public T buscar(T dato) {
 
-
-
-
-public T buscar(T dato) {
-
-	// TODO implementar
-	T rta = null;
-	boolean encontrado = false;
-	for(int i = 0 ; i< tamanoAct && !encontrado; i++)
-	{
-		if(elementos[i].equals(dato))
+		// TODO implementar
+		T rta = null;
+		boolean encontrado = false;
+		for(int i = 0 ; i< tamanoAct && !encontrado; i++)
 		{
-			rta = elementos[i];
+			if(elementos[i].equals(dato))
+			{
+				rta = elementos[i];
+			}
 		}
+		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
+		return rta;
 	}
-	// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-	return rta;
-}
 
-public T eliminar(T dato) {
+	/**
+	 * Elimina el elemento recibido por parametro y reorganiza el arreglo
+	 * @param dato a eliminar
+	 * @return elemento eliminado, null de lo contrario
+	 */
+	public T eliminar(T dato) {
 
-	// TODO implementar
-	T rta = null;
-	//Si el dato no existe, retorno nulll
-	if(buscar(dato)==null)
-	{
-		return null;
-	}
-	else
-	{
-		//Como no se sabe la posicion del dato, hago un for buscandolo
+		// TODO implementar
+		T rta = null;
 		int pos = 0;
 		for(int i = 0;i<tamanoAct;i++)
 		{
-			if(elementos[i].equals(dato))
+			if(elementos[i].compareTo(dato)==0)
 			{
 				pos = i;
 				rta = elementos[i];
@@ -114,58 +108,69 @@ public T eliminar(T dato) {
 			{
 				elementos[j]=elementos[j+1];
 			}
+			tamanoAct = tamanoAct-1;
 
 		}
+		return rta;
+
 	}
-	tamanoAct = tamanoAct-1;
-	// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-	return rta;
-}
 
 
 
-
-
-public int darCapacidad()
-{
-	return tamanoMax;
-}
-
-public int darTamano() 
-{
-	return tamanoAct;
-}
-
-public T darElemento(int i)
-{
-	// TODO implementar
-
-	if(i > tamanoAct || i<0)
+	/**
+	 * Da la capacidad
+	 */
+	public int darCapacidad()
 	{
-		return null;
+		return tamanoMax;
 	}
-	else
+
+	/**
+	 * Da el tamano actual
+	 */
+	public int darTamano() 
 	{
-		return elementos[i];
+		return tamanoAct;
+	}
+	
+	/** 
+	 * Da el elemento en la posicion recibida por parametro
+	 * @param posicion
+	 * @return elemento en la posicion recibida por parametro. Null si la posicion es mayor a al tamanho actual, o s es menor a 0
+	 */
+	public T darElemento(int i)
+	{
+		// TODO implementar
+
+		if(i > tamanoAct || i<0)
+		{
+			return null;
+		}
+		else
+		{
+			return elementos[i];
+		}
+
 	}
 
-}
 
-
-
-public void invertir()
-{
-
-
-	T[] copia = elementos;
-	int ultimo = darTamano()-1;
-
-	for (int i=0; i<tamanoAct&& !(ultimo<0); i++)
-	{           
-		elementos[i]=copia[ultimo];
-		ultimo--;
+	/**
+	 * Invierte los elementos del arreglo
+	 */
+	public void invertir()
+	{
+		T[] copia = elementos; 
+		T[] nuevo = (T[]) new Object[tamanoMax]; 
+		for(int i = 0; i<tamanoAct;i++) 
+		{
+			int i_final = tamanoAct - 1 - i; 
+			nuevo[i] = elementos[i_final]; 
+		}
+		elementos = nuevo; 
 	}
 
 
-}
+
+
+
 }
