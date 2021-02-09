@@ -7,123 +7,136 @@ package model.data_structures;
  * @author Fernando De la Rosa
  *
  */
-public class ArregloDinamico<T> implements IArregloDinamico {
-		/**
-		 * Capacidad maxima del arreglo
-		 */
-        private int tamanoMax;
-		/**
-		 * Numero de elementos presentes en el arreglo (de forma compacta desde la posicion 0)
-		 */
-        private int tamanoAct;
-        /**
-         * Arreglo de elementos de tamaNo maximo
-         */
-        private T elementos[ ];
+public class ArregloDinamico<T> implements IArregloDinamico <T> {
+	/**
+	 * Capacidad maxima del arreglo
+	 */
+	private int tamanoMax;
+	/**
+	 * Numero de elementos presentes en el arreglo (de forma compacta desde la posicion 0)
+	 */
+	private int tamanoAct;
+	/**
+	 * Arreglo de elementos de tamaNo maximo
+	 */
+	private T [] elementos;
 
-        /**
-         * Construir un arreglo con la capacidad maxima inicial.
-         * @param max Capacidad maxima inicial
-         */
-		@SuppressWarnings("unchecked")
-		public ArregloDinamico( int max )
-        {
-               elementos = (T[] new Object[max];
-               tamanoMax = max;
-               tamanoAct = 0;
-        }
-        
-		
-		public void agregar( T dato )
-        {
-               if ( tamanoAct == tamanoMax )
-               {  // caso de arreglo lleno (aumentar tamaNo)
-                    tamanoMax = 2 * tamanoMax;
-                    T[ ] copia = elementos;
-                    elementos = (T[]) new Object[tamanoMax];
-                    for ( int i = 0; i < tamanoAct; i++)
-                    {
-                     	 elementos[i] = copia[i];
-                    } 
-               }	
-               elementos[tamanoAct] = dato;
-               tamanoAct++;
-       }
+	/**
+	 * Construir un arreglo con la capacidad maxima inicial.
+	 * @param max Capacidad maxima inicial
+	 */
 
-		public int darCapacidad() {
-			return tamanoMax;
-		}
+	public ArregloDinamico( int max )
+	{
+		elementos = (T[]) new Object[max];
+		tamanoMax = max;
+		tamanoAct = 0;
+	}
 
-		public int darTamano() {
-			return tamanoAct;
-		}
 
-		public T darElemento(int i) {
-			if(i > tamanoAct || i<0)
+	public void agregar( T dato )
+	{
+		if ( tamanoAct == tamanoMax )
+		{  // caso de arreglo lleno (aumentar tamaNo)
+			tamanoMax = 2 * tamanoMax;
+			T[ ] copia = elementos;
+			elementos = (T[]) new Object[tamanoMax];
+			for ( int i = 0; i < tamanoAct; i++)
 			{
-				return null;
-			}
-			else
-			{
-				return elementos[i];
-			}
-			// TODO implementar
-		}
+				elementos[i] = copia[i];
+			} 
+		}	
+		elementos[tamanoAct] = dato;
+		tamanoAct++;
+	}
 
-		public T buscar(T dato) {
-			// TODO implementar
-			T rta = null;
-			boolean encontrado = false;
-			for(int i = 0 ; i< tamanoAct && !encontrado; i++)
+	public int darCapacidad() {
+		return tamanoMax;
+	}
+
+	public int darTamano() {
+		return tamanoAct;
+	}
+
+	public T darElemento(int i) {
+		if(i > tamanoAct || i<0)
+		{
+			return null;
+		}
+		else
+		{
+			return elementos[i];
+		}
+		// TODO implementar
+	}
+
+	public T buscar(T dato) {
+		// TODO implementar
+		T rta = null;
+		boolean encontrado = false;
+		for(int i = 0 ; i< tamanoAct && !encontrado; i++)
+		{
+			if(elementos[i].equals(dato))
+			{
+				rta = elementos[i];
+			}
+		}
+		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
+		return rta;
+	}
+
+	public T eliminar(T dato) {
+		// TODO implementar
+		T rta = null;
+		//Si el dato no existe, retorno nulll
+		if(buscar(dato)==null)
+		{
+			return null;
+		}
+		else
+		{
+			//Como no se sabe la posicion del dato, hago un for buscandolo
+			int pos = 0;
+			for(int i = 0;i<tamanoAct;i++)
 			{
 				if(elementos[i].equals(dato))
 				{
+					pos = i;
 					rta = elementos[i];
+					elementos[i]=null;
 				}
 			}
-			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-			return rta;
+			//Una vez se encuentra la posicion, se desfaza todo el arreglo a partir del eliminado
+			for(int j = pos; j<tamanoAct;j++)
+			{
+				if(j==tamanoAct-1)
+				{
+					elementos[j]=null;
+				}
+				else
+				{
+					elementos[j]=elementos[j+1];
+				}
+
+			}
+		}
+		tamanoAct = tamanoAct-1;
+		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
+		return rta;
+	}
+
+	public void invertir()
+	{
+
+
+		T[] copia = elementos;
+		int ultimo = darTamano()-1;
+
+		for (int i=0; i<tamanoAct&& !(ultimo<0); i++)
+		{           
+			elementos[i]=copia[ultimo];
+			ultimo--;
 		}
 
-		public T eliminar(T dato) {
-			// TODO implementar
-			T rta = null;
-			//Si el dato no existe, retorno nulll
-			if(buscar(dato)==null)
-			{
-				return null;
-			}
-			else
-			{
-				//Como no se sabe la posicion del dato, hago un for buscandolo
-				int pos = 0;
-				for(int i = 0;i<tamanoAct;i++)
-				{
-					if(elementos[i].equals(dato))
-					{
-						pos = i;
-						rta = elementos[i];
-						elementos[i]=null;
-					}
-				}
-				//Una vez se encuentra la posicion, se desfaza todo el arreglo a partir del eliminado
-				for(int j = pos; j<tamanoAct;j++)
-				{
-					if(j==tamanoAct-1)
-					{
-						elementos[j]=null;
-					}
-					else
-					{
-						elementos[j]=elementos[j+1];
-					}
-					
-				}
-			}
-			tamanoAct = tamanoAct-1;
-			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-			return rta;
-		}
-
-
+	}
 }

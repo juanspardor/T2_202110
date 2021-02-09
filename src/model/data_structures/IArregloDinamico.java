@@ -19,7 +19,7 @@ public interface IArregloDinamico<T> {
 	 * @param i posicion de consulta
 	 * @return elemento de consulta. null si no hay elemento en posicion.
 	 */
-	T darElemento( int i );
+	public T darElemento( int i );
 
 	/**
 	 * Agregar un dato de forma compacta (en la primera casilla disponible) 
@@ -33,7 +33,7 @@ public interface IArregloDinamico<T> {
 	 * @param dato Objeto de busqueda en el arreglo
 	 * @return elemento encontrado en el arreglo (si existe). null si no se encontro el dato.
 	 */
-	T buscar(T dato);
+	public T buscar(T dato);
 	
 	/**
 	 * Eliminar un dato del arreglo.
@@ -41,6 +41,9 @@ public interface IArregloDinamico<T> {
 	 * @param dato Objeto de eliminacion en el arreglo
 	 * @return dato eliminado
 	 */
-	T eliminar( T dato );
+	public T eliminar( T dato );
 
+	
+	public void invertir ();
+	
 }
