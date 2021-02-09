@@ -8,7 +8,7 @@ package model.data_structures;
  * @param <T>
  *
  */
-@SuppressWarnings("rawtypes")
+
 public class ArregloDinamico<T> implements IArregloDinamico <T> {
 	/**
 	 * Capacidad maxima del arreglo
@@ -30,6 +30,7 @@ public class ArregloDinamico<T> implements IArregloDinamico <T> {
 
 	public ArregloDinamico( int max )
 	{
+		
 		elementos = (T[] ) new Object[max];
 		tamanoMax = max;
 		tamanoAct = 0;
@@ -37,112 +38,134 @@ public class ArregloDinamico<T> implements IArregloDinamico <T> {
 
 
 
-	public void agregar ( T dato )
+
+
+
+	public void agregar( T dato )
 	{
 		if ( tamanoAct == tamanoMax )
-		{  
-			// caso de arreglo lleno (aumentar tamaNo)
-
+		{  // caso de arreglo lleno (aumentar tamaNo)
 			tamanoMax = 2 * tamanoMax;
-			T[] copia = elementos;
+			T[ ] copia = elementos;
 			elementos = (T[]) new Object[tamanoMax];
 			for ( int i = 0; i < tamanoAct; i++)
 			{
 				elementos[i] = copia[i];
 			} 
+
 		}
+	elementos[tamanoAct++] = dato;
+	tamanoAct++;
 
-		elementos[tamanoAct] = dato;
-		tamanoAct++;
-	}
+	}	
 
 
-	
-	public T buscar (T dato) 
+
+
+
+
+
+public T buscar(T dato) {
+
+	// TODO implementar
+	T rta = null;
+	boolean encontrado = false;
+	for(int i = 0 ; i< tamanoAct && !encontrado; i++)
 	{
-		// TODO implementar
-		T rta = null;
-		boolean encontrado = false;
-		for(int i = 0 ; i< tamanoAct && !encontrado; i++)
+		if(elementos[i].equals(dato))
+		{
+			rta = elementos[i];
+		}
+	}
+	// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
+	return rta;
+}
+
+public T eliminar(T dato) {
+
+	// TODO implementar
+	T rta = null;
+	//Si el dato no existe, retorno nulll
+	if(buscar(dato)==null)
+	{
+		return null;
+	}
+	else
+	{
+		//Como no se sabe la posicion del dato, hago un for buscandolo
+		int pos = 0;
+		for(int i = 0;i<tamanoAct;i++)
 		{
 			if(elementos[i].equals(dato))
 			{
+				pos = i;
 				rta = elementos[i];
+				elementos[i]=null;
 			}
 		}
-		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-		return rta;
-	}
-
-	public T eliminar (T dato) {
-		// TODO implementar
-		T rta = null;
-		//Si el dato no existe, retorno nulll
-		if(buscar(dato)==null)
+		//Una vez se encuentra la posicion, se desfaza todo el arreglo a partir del eliminado
+		for(int j = pos; j<tamanoAct;j++)
 		{
-			return null;
-		}
-		else
-		{
-			//Como no se sabe la posicion del dato, hago un for buscandolo
-			int pos = 0;
-			for(int i = 0;i<tamanoAct;i++)
+			if(j==tamanoAct-1)
 			{
-				if(elementos[i].equals(dato))
-				{
-					pos = i;
-					rta = elementos[i];
-					elementos[i]=null;
-				}
+				elementos[j]=null;
 			}
-			//Una vez se encuentra la posicion, se desfaza todo el arreglo a partir del eliminado
-			for(int j = pos; j<tamanoAct;j++)
+			else
 			{
-				if(j==tamanoAct-1)
-				{
-					elementos[j]=null;
-				}
-				else
-				{
-					elementos[j]=elementos[j+1];
-				}
-
+				elementos[j]=elementos[j+1];
 			}
+
 		}
-		tamanoAct = tamanoAct-1;
-		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-		return rta;
 	}
+	tamanoAct = tamanoAct-1;
+	// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
+	return rta;
+}
 
 
-	
 
-	public int darCapacidad()
+
+
+public int darCapacidad()
+{
+	return tamanoMax;
+}
+
+public int darTamano() 
+{
+	return tamanoAct;
+}
+
+public T darElemento(int i)
+{
+	// TODO implementar
+
+	if(i > tamanoAct || i<0)
 	{
-		return tamanoMax;
+		return null;
 	}
-
-	public int darTamano() 
+	else
 	{
-		return tamanoAct;
+		return elementos[i];
 	}
 
-	public T darElemento(int i)
-	{
-		// TODO implementar
-		
-		if(i > tamanoAct || i<0)
-		{
-			return null;
-		}
-		else
-		{
-			return elementos[i];
-		}
-		
+}
+
+
+
+public void invertir()
+{
+
+
+	T[] copia = elementos;
+	int ultimo = darTamano()-1;
+
+	for (int i=0; i<tamanoAct&& !(ultimo<0); i++)
+	{           
+		elementos[i]=copia[ultimo];
+		ultimo--;
 	}
 
 
-	
-
+}
 }
