@@ -37,7 +37,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 
 
-	public void agregar( T dato )
+	public void addLast( T dato )
 	{
 		if ( tamanoAct == tamanoMax )
 		{  // caso de arreglo lleno (aumentar tamaNo)
@@ -132,7 +132,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 	{
 		return tamanoAct;
 	}
-	
+
 	/** 
 	 * Da el elemento en la posicion recibida por parametro
 	 * @param posicion
@@ -172,102 +172,227 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 
 	@Override
-	public void addFirst(T elemento) {
+	public void addFirst(T elemento) 
+	{
+		if(tamanoAct == tamanoMax)
+		{
+			tamanoMax = tamanoMax*2;
+			T[] copia = elementos;
+			elementos = (T[]) new Object[tamanoMax];
+			elementos[0]=elemento;
+			for(int i = 0;i<tamanoAct;i++)
+			{
+				elementos[i+1]=copia[i];;
+			}
+		}
+		else
+		{
+			T[] copia = elementos;
+			elementos = (T[]) new Object[tamanoMax];
+			elementos[0]=elemento;
+			for(int i = 0;i<tamanoAct;i++)
+			{
+				elementos[i+1]=copia[i];;
+			}
+		}
+		tamanoAct++;
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 
 	@Override
-	public void addLast(T elemento) {
-		// TODO Auto-generated method stub
-		
+	public void insertElement(T elemento, int posicion) 
+	{
+		if(posicion<tamanoAct && 0<=posicion)
+		{
+			if(tamanoAct==tamanoMax)
+			{
+				tamanoMax = tamanoMax*2;
+				T[] copia = elementos;
+				elementos = (T[]) new Object[tamanoMax];
+				for(int i = 0;i<posicion;i++)
+				{
+					elementos[i]=copia[i];
+				}
+				elementos[posicion]=elemento;
+				for(int j = posicion;j<tamanoAct;j++)
+				{
+					elementos[j+1]=copia[j];
+				}
+			}
+			else
+			{
+				T[] copia = elementos;
+				elementos = (T[]) new Object[tamanoMax];
+				for(int i = 0;i<posicion;i++)
+				{
+					elementos[i]=copia[i];
+				}
+				elementos[posicion]=elemento;
+				for(int j = posicion;j<tamanoAct;j++)
+				{
+					elementos[j+1]=copia[j];
+				}
+			}
+			tamanoAct++;
+		}
+
 	}
 
 
 
 	@Override
-	public void insertElement(T elemento, int posicion) {
-		// TODO Auto-generated method stub
-		
+	public T removeFirst() 
+	{
+		T rta = null;
+		if(tamanoAct!=0)
+		{
+			rta = elementos[0];
+			T[] copia = elementos;
+			elementos = (T[]) new Object[tamanoAct-1];
+			for(int i = 1;i<tamanoAct;i++)
+			{
+				elementos[i-1]=copia[i];
+			}
+			tamanoAct--;
+		}
+		return rta;
 	}
 
 
 
 	@Override
-	public T removeFirst() {
-		// TODO Auto-generated method stub
-		return null;
+	public T removeLast() 
+	{
+		T rta =null;
+		if(tamanoAct!=0)
+		{
+			rta = elementos[tamanoAct-1];
+			elementos[tamanoAct-1]=null;
+			tamanoAct--;
+		}
+		return rta;
 	}
 
 
 
 	@Override
-	public T removeLast() {
+	public T deleteElement(int posicion) 
+	{
+		T rta = null;
+		if(posicion==0)
+		{
+			rta = removeFirst();
+		}
+		else if(posicion ==tamanoAct-1)
+		{
+			rta = removeLast();
+		}
+		else if(posicion<tamanoAct && 0<posicion)
+		{
+			rta = elementos[posicion];
+			T[] copia = elementos;
+			elementos = (T[]) new Object[tamanoMax];
+			for(int i = 0; i<posicion;i++)
+			{
+				elementos[i] = copia[i];
+			}
+			for(int j = posicion; j<tamanoAct-1;j++)
+			{
+				elementos[j] = copia[j+1];
+			}
+			tamanoAct--;
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return rta;
 	}
 
 
 
 	@Override
-	public T deleteElement(int posicion) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	@Override
-	public T firstElement() {
-		// TODO Auto-generated method stub
-		return null;
+	public T firstElement() 
+	{
+		if(tamanoAct==0)
+		{
+			return null;
+		}
+		else
+		{
+			return elementos[0];
+		}
 	}
 
 
 
 	@Override
 	public T lastElement() {
-		// TODO Auto-generated method stub
-		return null;
+		if(tamanoAct==0)
+		{
+			return null;
+		}
+		else
+		{
+			return elementos[tamanoAct-1];
+		}
 	}
-
-
-
-
-	
-
 
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		if(tamanoAct==0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 
 
 	@Override
-	public int isPresent(T element) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int isPresent(T element) 
+	{
+		int rta = -1;
+		for(int i = 0; i<tamanoAct;i++)
+		{
+			if(elementos[i].compareTo(element)==0)
+			{
+				rta = i;
+			}
+		}
+		return rta;
 	}
 
 
 
 	@Override
-	public void exchange(int pos1, int pos2) {
+	public void exchange(int pos1, int pos2) 
+	{
+		if(pos1<tamanoAct && 0<=pos1 && pos2<tamanoAct && 0<=pos2)
+		{
+			T ele1 = elementos[pos1];
+			T ele2 = elementos[pos2];
+			elementos[pos2]=ele1;
+			elementos[pos1]=ele2;
+		}
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 
 	@Override
-	public void changeInfo(int pos, T elemento) {
-		// TODO Auto-generated method stub
-		
+	public void changeInfo(int pos, T elemento) 
+	{
+		if(pos<tamanoAct && 0<=pos)
+		{
+			elementos[pos] = elemento;
+		}
+
 	}
 
 
