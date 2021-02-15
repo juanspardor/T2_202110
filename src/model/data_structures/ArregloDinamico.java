@@ -142,13 +142,13 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 	{
 		// TODO implementar
 
-		if(i > tamanoAct || i<0)
+		if(i > tamanoAct || i<1)
 		{
 			return null;
 		}
 		else
 		{
-			return elementos[i];
+			return elementos[i-1];
 		}
 
 	}
@@ -203,8 +203,9 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 
 	@Override
-	public void insertElement(T elemento, int posicion) 
+	public void insertElement(T elemento, int puesto) 
 	{
+		int posicion = puesto-1;
 		if(posicion<tamanoAct && 0<=posicion)
 		{
 			if(tamanoAct==tamanoMax)
@@ -279,8 +280,9 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 
 	@Override
-	public T deleteElement(int posicion) 
+	public T deleteElement(int puesto) 
 	{
+		int posicion = puesto -1;
 		T rta = null;
 		if(posicion==0)
 		{
@@ -370,8 +372,10 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 
 	@Override
-	public void exchange(int pos1, int pos2) 
+	public void exchange(int posicion1, int posicion2) 
 	{
+		int pos1 = posicion1-1;
+		int pos2 = posicion2-1;
 		if(pos1<tamanoAct && 0<=pos1 && pos2<tamanoAct && 0<=pos2)
 		{
 			T ele1 = elementos[pos1];
@@ -386,8 +390,9 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 
 	@Override
-	public void changeInfo(int pos, T elemento) 
+	public void changeInfo(int posicion, T elemento) 
 	{
+		int pos = posicion;
 		if(pos<tamanoAct && 0<=pos)
 		{
 			elementos[pos] = elemento;
