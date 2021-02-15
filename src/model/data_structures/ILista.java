@@ -90,7 +90,7 @@ public interface ILista<T extends Comparable<T>>
 	 * @param pos posicion del elemento a cambiar
 	 * @param elemento con la informacion actualizada
 	 */
-	public void changeIngo(int pos, T elemento);
+	public void changeInfo(int pos, T elemento);
 	
 
 }

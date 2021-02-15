@@ -9,7 +9,7 @@ package model.data_structures;
  *
  */
 
-public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamico<T> {
+public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 	/**
 	 * Capacidad maxima del arreglo
 	 */
@@ -128,7 +128,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	/**
 	 * Da el tamano actual
 	 */
-	public int darTamano() 
+	public int size() 
 	{
 		return tamanoAct;
 	}
@@ -138,7 +138,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 	 * @param posicion
 	 * @return elemento en la posicion recibida por parametro. Null si la posicion es mayor a al tamanho actual, o s es menor a 0
 	 */
-	public T darElemento(int i)
+	public T getElement(int i)
 	{
 		// TODO implementar
 
@@ -167,6 +167,107 @@ public class ArregloDinamico<T extends Comparable<T>> implements IArregloDinamic
 			nuevo[i] = elementos[i_final]; 
 		}
 		elementos = nuevo; 
+	}
+
+
+
+	@Override
+	public void addFirst(T elemento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void addLast(T elemento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void insertElement(T elemento, int posicion) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public T removeFirst() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public T removeLast() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public T deleteElement(int posicion) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public T firstElement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public T lastElement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	
+
+
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public int isPresent(T element) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	@Override
+	public void exchange(int pos1, int pos2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void changeInfo(int pos, T elemento) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
