@@ -2,16 +2,23 @@ package model.logic;
 
 import model.data_structures.ArregloDinamico;
 import model.data_structures.IArregloDinamico;
+import model.data_structures.ListaEncadenada;
+import model.data_structures.YoutubeVideo;
 
 /**
  * Definicion del modelo del mundo
  *
  */
-public class Modelo {
+public class Modelo 
+{
 	/**
 	 * Atributos del modelo del mundo
 	 */
 	private IArregloDinamico<String> datos;
+	
+	
+	private ListaEncadenada<YoutubeVideo> listaVideos;
+	
 	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
