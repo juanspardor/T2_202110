@@ -30,7 +30,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 	@SuppressWarnings("unchecked")
 	public ArregloDinamico( int max )
 	{
-		elementos = (T[]) new Object[max];
+		elementos = (T[]) new Comparable[max];
 		tamanoMax = max;
 		tamanoAct = 0;
 	}
@@ -363,7 +363,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 		{
 			if(elementos[i].compareTo(element)==0)
 			{
-				rta = i;
+				rta = i+1;
 			}
 		}
 		return rta;
